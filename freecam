@@ -1,0 +1,1488 @@
+--==================================================
+-- MOBILE FREECAM
+-- INTRO / LOADER UI
+-- Creator: realgoolcall
+--==================================================
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+--==================================================
+-- CONFIG
+--==================================================
+
+local CREATOR_NAME = "realgoolcall"
+local CREATOR_USER_ID = 11487455574
+local COUNTDOWN = 10
+
+--==================================================
+-- REMOVE OLD VERSION
+--==================================================
+
+local OldGui = PlayerGui:FindFirstChild("MobileFreecamIntro")
+
+if OldGui then
+	OldGui:Destroy()
+end
+
+--==================================================
+-- GUI
+--==================================================
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "MobileFreecamIntro"
+Gui.ResetOnSpawn = false
+Gui.IgnoreGuiInset = true
+Gui.DisplayOrder = 9999
+Gui.Parent = PlayerGui
+
+--==================================================
+-- MAIN PANEL
+--==================================================
+
+local Panel = Instance.new("Frame")
+Panel.Name = "Panel"
+Panel.Size = UDim2.fromOffset(290, 205)
+Panel.Position = UDim2.new(0.5, -145, 0.5, -102)
+Panel.BackgroundColor3 = Color3.fromRGB(17, 17, 22)
+Panel.BorderSizePixel = 0
+Panel.Parent = Gui
+
+local PanelCorner = Instance.new("UICorner")
+PanelCorner.CornerRadius = UDim.new(0, 16)
+PanelCorner.Parent = Panel
+
+--==================================================
+-- SMALL STROKE
+--==================================================
+
+local Stroke = Instance.new("UIStroke")
+Stroke.Color = Color3.fromRGB(55, 55, 65)
+Stroke.Thickness = 1
+Stroke.Transparency = 0.25
+Stroke.Parent = Panel
+
+--==================================================
+-- TITLE
+--==================================================
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.fromOffset(260, 27)
+Title.Position = UDim2.fromOffset(15, 10)
+Title.BackgroundTransparency = 1
+Title.Text = "MOBILE FREECAM"
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.TextSize = 17
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Panel
+
+--==================================================
+-- CREATOR AVATAR
+--==================================================
+
+local Avatar = Instance.new("ImageLabel")
+Avatar.Name = "CreatorAvatar"
+Avatar.Size = UDim2.fromOffset(42, 42)
+Avatar.Position = UDim2.fromOffset(15, 43)
+Avatar.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+Avatar.BorderSizePixel = 0
+Avatar.Parent = Panel
+
+local AvatarCorner = Instance.new("UICorner")
+AvatarCorner.CornerRadius = UDim.new(1, 0)
+AvatarCorner.Parent = Avatar
+
+--==================================================
+-- CREATOR NAME
+--==================================================
+
+local CreatorLabel = Instance.new("TextLabel")
+CreatorLabel.Size = UDim2.fromOffset(210, 21)
+CreatorLabel.Position = UDim2.fromOffset(67, 45)
+CreatorLabel.BackgroundTransparency = 1
+CreatorLabel.Text = CREATOR_NAME
+CreatorLabel.TextColor3 = Color3.new(1, 1, 1)
+CreatorLabel.TextSize = 13
+CreatorLabel.Font = Enum.Font.GothamBold
+CreatorLabel.TextXAlignment = Enum.TextXAlignment.Left
+CreatorLabel.Parent = Panel
+
+local CreatorSub = Instance.new("TextLabel")
+CreatorSub.Size = UDim2.fromOffset(210, 17)
+CreatorSub.Position = UDim2.fromOffset(67, 64)
+CreatorSub.BackgroundTransparency = 1
+CreatorSub.Text = "Creator"
+CreatorSub.TextColor3 = Color3.fromRGB(145, 145, 155)
+CreatorSub.TextSize = 9
+CreatorSub.Font = Enum.Font.Gotham
+CreatorSub.TextXAlignment = Enum.TextXAlignment.Left
+CreatorSub.Parent = Panel
+
+--==================================================
+-- FEATURES
+--==================================================
+
+local Features = Instance.new("TextLabel")
+Features.Name = "Features"
+Features.Size = UDim2.fromOffset(260, 50)
+Features.Position = UDim2.fromOffset(15, 88)
+Features.BackgroundTransparency = 1
+Features.Text =
+	"Freecam  •  R6 / R15  •  Mobile Controls\n" ..
+	"Player Tracker  •  Health  •  Team  •  Settings"
+Features.TextColor3 = Color3.fromRGB(190, 190, 198)
+Features.TextSize = 9
+Features.Font = Enum.Font.GothamMedium
+Features.TextXAlignment = Enum.TextXAlignment.Left
+Features.TextYAlignment = Enum.TextYAlignment.Center
+Features.Parent = Panel
+
+--==================================================
+-- STATUS
+--==================================================
+
+local Status = Instance.new("TextLabel")
+Status.Size = UDim2.fromOffset(260, 17)
+Status.Position = UDim2.fromOffset(15, 137)
+Status.BackgroundTransparency = 1
+Status.Text = "Initializing Freecam..."
+Status.TextColor3 = Color3.fromRGB(220, 220, 225)
+Status.TextSize = 9
+Status.Font = Enum.Font.GothamMedium
+Status.TextXAlignment = Enum.TextXAlignment.Left
+Status.Parent = Panel
+
+--==================================================
+-- PROGRESS BACKGROUND
+--==================================================
+
+local ProgressBackground = Instance.new("Frame")
+ProgressBackground.Name = "ProgressBackground"
+ProgressBackground.Size = UDim2.fromOffset(260, 8)
+ProgressBackground.Position = UDim2.fromOffset(15, 158)
+ProgressBackground.BackgroundColor3 = Color3.fromRGB(42, 42, 50)
+ProgressBackground.BorderSizePixel = 0
+ProgressBackground.ClipsDescendants = true
+ProgressBackground.Parent = Panel
+
+local ProgressCorner = Instance.new("UICorner")
+ProgressCorner.CornerRadius = UDim.new(1, 0)
+ProgressCorner.Parent = ProgressBackground
+
+--==================================================
+-- PROGRESS BAR
+--==================================================
+
+local ProgressBar = Instance.new("Frame")
+ProgressBar.Name = "ProgressBar"
+ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+ProgressBar.BackgroundColor3 = Color3.fromRGB(75, 160, 255)
+ProgressBar.BorderSizePixel = 0
+ProgressBar.Parent = ProgressBackground
+
+local ProgressBarCorner = Instance.new("UICorner")
+ProgressBarCorner.CornerRadius = UDim.new(1, 0)
+ProgressBarCorner.Parent = ProgressBar
+
+--==================================================
+-- COUNTDOWN
+--==================================================
+
+local CountdownLabel = Instance.new("TextLabel")
+CountdownLabel.Name = "Countdown"
+CountdownLabel.Size = UDim2.fromOffset(260, 20)
+CountdownLabel.Position = UDim2.fromOffset(15, 174)
+CountdownLabel.BackgroundTransparency = 1
+CountdownLabel.Text = "Starting in 10"
+CountdownLabel.TextColor3 = Color3.fromRGB(145, 145, 155)
+CountdownLabel.TextSize = 9
+CountdownLabel.Font = Enum.Font.Gotham
+CountdownLabel.TextXAlignment = Enum.TextXAlignment.Center
+CountdownLabel.Parent = Panel
+
+--==================================================
+-- LOAD CREATOR AVATAR
+--==================================================
+
+task.spawn(function()
+
+	local Success, Image = pcall(function()
+
+		return Players:GetUserThumbnailAsync(
+			CREATOR_USER_ID,
+			Enum.ThumbnailType.HeadShot,
+			Enum.ThumbnailSize.Size150x150
+		)
+
+	end)
+
+	if Success and Image and Avatar.Parent then
+		Avatar.Image = Image
+	end
+
+end)
+
+--==================================================
+-- COUNTDOWN
+--==================================================
+
+for Remaining = COUNTDOWN, 1, -1 do
+
+	if not Gui.Parent then
+		return
+	end
+
+	local Completed = COUNTDOWN - Remaining
+	local Progress = Completed / COUNTDOWN
+
+	CountdownLabel.Text =
+		"Starting in " .. Remaining
+
+	ProgressBar:TweenSize(
+		UDim2.new(Progress, 0, 1, 0),
+		Enum.EasingDirection.Out,
+		Enum.EasingStyle.Linear,
+		1,
+		true
+	)
+
+	task.wait(1)
+end
+
+--==================================================
+-- COMPLETE
+--==================================================
+
+Status.Text = "Freecam Ready"
+CountdownLabel.Text = "Ready"
+
+ProgressBar:TweenSize(
+	UDim2.new(1, 0, 1, 0),
+	Enum.EasingDirection.Out,
+	Enum.EasingStyle.Quad,
+	0.2,
+	true
+)
+
+task.wait(0.4)
+
+--==================================================
+-- FADE OUT
+--==================================================
+
+local FadeTime = 0.35
+
+for _, Object in ipairs(Panel:GetDescendants()) do
+
+	if Object:IsA("TextLabel") then
+
+		TweenService:Create(
+			Object,
+			TweenInfo.new(FadeTime),
+			{TextTransparency = 1}
+		):Play()
+
+	elseif Object:IsA("ImageLabel") then
+
+		TweenService:Create(
+			Object,
+			TweenInfo.new(FadeTime),
+			{ImageTransparency = 1}
+		):Play()
+
+	elseif Object:IsA("Frame") then
+
+		TweenService:Create(
+			Object,
+			TweenInfo.new(FadeTime),
+			{BackgroundTransparency = 1}
+		):Play()
+
+	elseif Object:IsA("UIStroke") then
+
+		TweenService:Create(
+			Object,
+			TweenInfo.new(FadeTime),
+			{Transparency = 1}
+		):Play()
+	end
+end
+
+task.wait(FadeTime)
+
+Gui:Destroy()
+
+print("[MobileFreecam] Intro completed")
+
+
+--==================================================
+-- MOBILE FREECAM + SETTINGS + PLAYER TRACKER
+-- R6 / R15
+--==================================================
+
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local Camera = workspace.CurrentCamera
+
+--==================================================
+-- CONFIG
+--==================================================
+
+local CameraSpeed = 35
+local LookSpeed = 0.22
+local Smoothness = 12
+local MaxPitch = 85
+
+local TrackerEnabled = true
+local TrackerCount = 3
+local TrackerDistance = 1000
+local TrackerInterval = 0.2
+
+--==================================================
+-- STATE
+--==================================================
+
+local FreecamEnabled = false
+
+local CameraPosition = Vector3.zero
+
+local Yaw = 0
+local Pitch = 0
+
+local TargetYaw = 0
+local TargetPitch = 0
+
+local Moving = {
+	Forward = false,
+	Backward = false,
+	Left = false,
+	Right = false,
+	Up = false,
+	Down = false
+}
+
+local LookTouch = nil
+local LastLookPosition = nil
+
+local TrackerTimer = 0
+local Trackers = {}
+
+--==================================================
+-- GUI
+--==================================================
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "FreecamSystem"
+Gui.ResetOnSpawn = false
+Gui.IgnoreGuiInset = true
+Gui.DisplayOrder = 100
+Gui.Parent = PlayerGui
+
+--==================================================
+-- FREECAM BUTTON
+--==================================================
+
+local FreecamButton = Instance.new("TextButton")
+FreecamButton.Size = UDim2.fromOffset(115,48)
+FreecamButton.Position = UDim2.new(1,-190,0,20)
+FreecamButton.Text = "FREECAM"
+FreecamButton.Font = Enum.Font.GothamBold
+FreecamButton.TextSize = 15
+FreecamButton.TextColor3 = Color3.new(1,1,1)
+FreecamButton.BackgroundColor3 = Color3.fromRGB(25,25,30)
+FreecamButton.Parent = Gui
+
+local FCCorner = Instance.new("UICorner")
+FCCorner.CornerRadius = UDim.new(0,12)
+FCCorner.Parent = FreecamButton
+
+--==================================================
+-- SETTINGS BUTTON
+--==================================================
+
+local SettingsButton = Instance.new("TextButton")
+SettingsButton.Size = UDim2.fromOffset(48,48)
+SettingsButton.Position = UDim2.new(1,-68,0,20)
+SettingsButton.Text = "⚙"
+SettingsButton.Font = Enum.Font.GothamBold
+SettingsButton.TextSize = 22
+SettingsButton.TextColor3 = Color3.new(1,1,1)
+SettingsButton.BackgroundColor3 = Color3.fromRGB(25,25,30)
+SettingsButton.Parent = Gui
+
+local SettingsCorner = Instance.new("UICorner")
+SettingsCorner.CornerRadius = UDim.new(0,12)
+SettingsCorner.Parent = SettingsButton
+
+--==================================================
+-- SETTINGS
+--==================================================
+
+local Settings = Instance.new("Frame")
+Settings.Size = UDim2.fromOffset(260,250)
+Settings.Position = UDim2.new(1,-280,0,78)
+Settings.BackgroundColor3 = Color3.fromRGB(20,20,25)
+Settings.Visible = false
+Settings.Parent = Gui
+
+local SettingsCorner2 = Instance.new("UICorner")
+SettingsCorner2.CornerRadius = UDim.new(0,12)
+SettingsCorner2.Parent = Settings
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1,-20,0,35)
+Title.Position = UDim2.fromOffset(10,5)
+Title.BackgroundTransparency = 1
+Title.Text = "FREECAM SETTINGS"
+Title.TextColor3 = Color3.new(1,1,1)
+Title.TextSize = 14
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Settings
+
+local function CreateSettingButton(Y)
+
+	local Button = Instance.new("TextButton")
+
+	Button.Size = UDim2.fromOffset(220,40)
+	Button.Position = UDim2.fromOffset(20,Y)
+
+	Button.BackgroundColor3 =
+		Color3.fromRGB(35,35,42)
+
+	Button.TextColor3 =
+		Color3.new(1,1,1)
+
+	Button.TextSize = 12
+	Button.Font = Enum.Font.GothamBold
+
+	Button.Parent = Settings
+
+	local Corner = Instance.new("UICorner")
+	Corner.CornerRadius = UDim.new(0,8)
+	Corner.Parent = Button
+
+	return Button
+end
+
+local SpeedButton = CreateSettingButton(45)
+local LookButton = CreateSettingButton(90)
+local TrackerButton = CreateSettingButton(135)
+local CountButton = CreateSettingButton(180)
+
+local function UpdateSettings()
+
+	SpeedButton.Text =
+		"Camera Speed: " .. CameraSpeed
+
+	LookButton.Text =
+		string.format(
+			"Look Speed: %.2f",
+			LookSpeed
+		)
+
+	TrackerButton.Text =
+		"Player Tracker: " ..
+		(TrackerEnabled and "ON" or "OFF")
+
+	CountButton.Text =
+		"Tracked Players: " ..
+		TrackerCount
+end
+
+UpdateSettings()
+
+SettingsButton.Activated:Connect(function()
+	Settings.Visible = not Settings.Visible
+end)
+
+SpeedButton.Activated:Connect(function()
+
+	CameraSpeed += 5
+
+	if CameraSpeed > 100 then
+		CameraSpeed = 10
+	end
+
+	UpdateSettings()
+end)
+
+LookButton.Activated:Connect(function()
+
+	LookSpeed += 0.05
+
+	if LookSpeed > 1 then
+		LookSpeed = 0.05
+	end
+
+	UpdateSettings()
+end)
+
+TrackerButton.Activated:Connect(function()
+
+	TrackerEnabled = not TrackerEnabled
+
+	if not TrackerEnabled then
+
+		for Player in pairs(Trackers) do
+
+			if Trackers[Player] then
+				Trackers[Player]:Destroy()
+			end
+
+			Trackers[Player] = nil
+		end
+	end
+
+	UpdateSettings()
+end)
+
+CountButton.Activated:Connect(function()
+
+	TrackerCount += 1
+
+	if TrackerCount > 6 then
+		TrackerCount = 1
+	end
+
+	UpdateSettings()
+end)
+
+--==================================================
+-- MOVEMENT
+--==================================================
+
+local Movement = Instance.new("Frame")
+Movement.Size = UDim2.fromOffset(190,190)
+Movement.Position = UDim2.new(0,25,1,-285)
+Movement.BackgroundTransparency = 1
+Movement.Visible = false
+Movement.Parent = Gui
+
+local function CreateMoveButton(Text,X,Y)
+
+	local Button = Instance.new("TextButton")
+
+	Button.Size = UDim2.fromOffset(58,58)
+	Button.Position = UDim2.fromOffset(X,Y)
+
+	Button.Text = Text
+	Button.TextSize = 22
+	Button.Font = Enum.Font.GothamBold
+
+	Button.TextColor3 =
+		Color3.new(1,1,1)
+
+	Button.BackgroundColor3 =
+		Color3.fromRGB(25,25,30)
+
+	Button.BackgroundTransparency = 0.18
+	Button.Parent = Movement
+
+	local Corner = Instance.new("UICorner")
+	Corner.CornerRadius = UDim.new(1,0)
+	Corner.Parent = Button
+
+	return Button
+end
+
+local ForwardButton = CreateMoveButton("▲",66,0)
+local BackButton = CreateMoveButton("▼",66,124)
+local LeftButton = CreateMoveButton("◀",0,62)
+local RightButton = CreateMoveButton("▶",132,62)
+
+local Vertical = Instance.new("Frame")
+Vertical.Size = UDim2.fromOffset(65,130)
+Vertical.Position = UDim2.new(1,-90,1,-235)
+Vertical.BackgroundTransparency = 1
+Vertical.Visible = false
+Vertical.Parent = Gui
+
+local UpButton = CreateMoveButton("UP",0,0)
+local DownButton = CreateMoveButton("DOWN",0,68)
+
+UpButton.Parent = Vertical
+DownButton.Parent = Vertical
+
+local function Hold(Button,Name)
+
+	Button.InputBegan:Connect(function(Input)
+
+		if Input.UserInputType == Enum.UserInputType.Touch
+			or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+			Moving[Name] = true
+		end
+	end)
+
+	Button.InputEnded:Connect(function(Input)
+
+		if Input.UserInputType == Enum.UserInputType.Touch
+			or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+			Moving[Name] = false
+		end
+	end)
+end
+
+Hold(ForwardButton,"Forward")
+Hold(BackButton,"Backward")
+Hold(LeftButton,"Left")
+Hold(RightButton,"Right")
+Hold(UpButton,"Up")
+Hold(DownButton,"Down")
+
+--==================================================
+-- TRACKER REMOVE
+--==================================================
+
+local function RemoveTracker(Player)
+
+	if Trackers[Player] then
+		Trackers[Player]:Destroy()
+	end
+
+	Trackers[Player] = nil
+end
+
+--==================================================
+-- CREATE TRACKER
+--==================================================
+
+local function CreateTracker(Player)
+
+	if Trackers[Player] then
+		return
+	end
+
+	local Character = Player.Character
+
+	if not Character then
+		return
+	end
+
+	local Root =
+		Character:FindFirstChild("HumanoidRootPart")
+
+	local Humanoid =
+		Character:FindFirstChildOfClass("Humanoid")
+
+	if not Root or not Humanoid then
+		return
+	end
+
+	local Billboard =
+		Instance.new("BillboardGui")
+
+	Billboard.Name =
+		"PlayerTracker"
+
+	Billboard.Adornee =
+		Root
+
+	Billboard.Size =
+		UDim2.fromOffset(120,38)
+
+	-- التغيير الوحيد: رفع الواجهة أكثر
+	Billboard.StudsOffset =
+		Vector3.new(0,6,0)
+
+	Billboard.AlwaysOnTop = true
+
+	Billboard.MaxDistance =
+		TrackerDistance
+
+	Billboard.Parent = Root
+
+	--==================================================
+	-- PANEL
+	--==================================================
+
+	local Frame =
+		Instance.new("Frame")
+
+	Frame.Size =
+		UDim2.fromScale(1,1)
+
+	Frame.BackgroundColor3 =
+		Color3.fromRGB(20,20,25)
+
+	Frame.BackgroundTransparency = 0.18
+
+	Frame.BorderSizePixel = 0
+
+	Frame.Parent = Billboard
+
+	local Corner =
+		Instance.new("UICorner")
+
+	Corner.CornerRadius =
+		UDim.new(0,6)
+
+	Corner.Parent = Frame
+
+	--==================================================
+	-- AVATAR
+	--==================================================
+
+	local Avatar =
+		Instance.new("ImageLabel")
+
+	Avatar.Size =
+		UDim2.fromOffset(28,28)
+
+	Avatar.Position =
+		UDim2.fromOffset(5,5)
+
+	Avatar.BackgroundTransparency = 1
+
+	Avatar.Parent = Frame
+
+	local AvatarCorner =
+		Instance.new("UICorner")
+
+	AvatarCorner.CornerRadius =
+		UDim.new(1,0)
+
+	AvatarCorner.Parent = Avatar
+
+	task.spawn(function()
+
+		local Success,Image =
+			pcall(function()
+
+				return Players:GetUserThumbnailAsync(
+					Player.UserId,
+					Enum.ThumbnailType.HeadShot,
+					Enum.ThumbnailSize.Size100x100
+				)
+
+			end)
+
+		if Success and Avatar.Parent then
+			Avatar.Image = Image
+		end
+	end)
+
+	--==================================================
+	-- NAME
+	--==================================================
+
+	local Name =
+		Instance.new("TextLabel")
+
+	Name.Name = "Name"
+
+	Name.Size =
+		UDim2.fromOffset(76,10)
+
+	Name.Position =
+		UDim2.fromOffset(38,2)
+
+	Name.BackgroundTransparency = 1
+
+	Name.Text =
+		Player.DisplayName
+
+	Name.TextColor3 =
+		Color3.new(1,1,1)
+
+	Name.TextSize = 8
+
+	Name.Font =
+		Enum.Font.GothamBold
+
+	Name.TextXAlignment =
+		Enum.TextXAlignment.Left
+
+	Name.TextTruncate =
+		Enum.TextTruncate.AtEnd
+
+	Name.Parent = Frame
+
+	--==================================================
+	-- HEALTH BACKGROUND
+	--==================================================
+
+	local HealthBackground =
+		Instance.new("Frame")
+
+	HealthBackground.Name =
+		"HealthBackground"
+
+	HealthBackground.Size =
+		UDim2.fromOffset(76,7)
+
+	HealthBackground.Position =
+		UDim2.fromOffset(38,14)
+
+	HealthBackground.BackgroundColor3 =
+		Color3.fromRGB(55,55,60)
+
+	HealthBackground.BorderSizePixel = 0
+
+	HealthBackground.Parent = Frame
+
+	local HealthCorner =
+		Instance.new("UICorner")
+
+	HealthCorner.CornerRadius =
+		UDim.new(1,0)
+
+	HealthCorner.Parent =
+		HealthBackground
+
+	--==================================================
+	-- HEALTH BAR
+	--==================================================
+
+	local HealthBar =
+		Instance.new("Frame")
+
+	HealthBar.Name =
+		"HealthBar"
+
+	HealthBar.Size =
+		UDim2.fromScale(1,1)
+
+	HealthBar.BackgroundColor3 =
+		Color3.fromRGB(60,220,90)
+
+	HealthBar.BorderSizePixel = 0
+
+	HealthBar.Parent =
+		HealthBackground
+
+	local HealthBarCorner =
+		Instance.new("UICorner")
+
+	HealthBarCorner.CornerRadius =
+		UDim.new(1,0)
+
+	HealthBarCorner.Parent =
+		HealthBar
+
+	--==================================================
+	-- HEALTH NUMBER
+	--==================================================
+
+	local HP =
+		Instance.new("TextLabel")
+
+	HP.Name = "HP"
+
+	HP.Size =
+		UDim2.fromOffset(76,7)
+
+	HP.Position =
+		UDim2.fromOffset(38,14)
+
+	HP.BackgroundTransparency = 1
+
+	HP.TextColor3 =
+		Color3.new(1,1,1)
+
+	HP.TextSize = 6
+
+	HP.Font =
+		Enum.Font.GothamBold
+
+	HP.TextXAlignment =
+		Enum.TextXAlignment.Center
+
+	HP.ZIndex = 3
+
+	HP.Parent = Frame
+
+	--==================================================
+	-- TEAM
+	--==================================================
+
+	local Team =
+		Instance.new("TextLabel")
+
+	Team.Name = "Team"
+
+	Team.Size =
+		UDim2.fromOffset(76,8)
+
+	Team.Position =
+		UDim2.fromOffset(38,29)
+
+	Team.BackgroundTransparency = 1
+
+	Team.TextColor3 =
+		Color3.fromRGB(180,180,180)
+
+	Team.TextSize = 6
+
+	Team.Font =
+		Enum.Font.Gotham
+
+	Team.TextXAlignment =
+		Enum.TextXAlignment.Left
+
+	Team.TextTruncate =
+		Enum.TextTruncate.AtEnd
+
+	Team.Parent = Frame
+
+	Trackers[Player] = Billboard
+end
+
+--==================================================
+-- UPDATE TRACKER
+--==================================================
+
+local function UpdateTracker(Player)
+
+	local Billboard =
+		Trackers[Player]
+
+	if not Billboard then
+		return
+	end
+
+	local Character =
+		Player.Character
+
+	if not Character then
+		RemoveTracker(Player)
+		return
+	end
+
+	local Root =
+		Character:FindFirstChild(
+			"HumanoidRootPart"
+		)
+
+	local Humanoid =
+		Character:FindFirstChildOfClass(
+			"Humanoid"
+		)
+
+	if not Root or not Humanoid then
+		RemoveTracker(Player)
+		return
+	end
+
+	local Frame =
+		Billboard:FindFirstChildOfClass("Frame")
+
+	if not Frame then
+		return
+	end
+
+	local HP =
+		Frame:FindFirstChild("HP")
+
+	local Team =
+		Frame:FindFirstChild("Team")
+
+	local HealthBackground =
+		Frame:FindFirstChild(
+			"HealthBackground"
+		)
+
+	local HealthBar = nil
+
+	if HealthBackground then
+		HealthBar =
+			HealthBackground:FindFirstChild(
+				"HealthBar"
+			)
+	end
+
+	--==================================================
+	-- HEALTH
+	--==================================================
+
+	local MaxHealth =
+		math.max(
+			Humanoid.MaxHealth,
+			1
+		)
+
+	local Health =
+		math.clamp(
+			Humanoid.Health,
+			0,
+			MaxHealth
+		)
+
+	local Percent =
+		Health / MaxHealth
+
+	if HP then
+
+		HP.Text =
+			math.floor(Health)
+			.. " / "
+			.. math.floor(MaxHealth)
+	end
+
+	if HealthBar then
+
+		HealthBar.Size =
+			UDim2.new(
+				Percent,
+				0,
+				1,
+				0
+			)
+
+		if Percent > 0.6 then
+
+			HealthBar.BackgroundColor3 =
+				Color3.fromRGB(
+					60,220,90
+				)
+
+		elseif Percent > 0.3 then
+
+			HealthBar.BackgroundColor3 =
+				Color3.fromRGB(
+					240,190,50
+				)
+
+		else
+
+			HealthBar.BackgroundColor3 =
+				Color3.fromRGB(
+					230,60,60
+				)
+		end
+	end
+
+	--==================================================
+	-- TEAM
+	--==================================================
+
+	if Team then
+
+		Team.Text =
+			"Team: "
+			.. (
+				Player.Team
+				and Player.Team.Name
+				or "None"
+			)
+	end
+end
+
+--==================================================
+-- FIND CLOSEST PLAYERS
+--==================================================
+
+local function UpdateTrackers()
+
+	if not FreecamEnabled then
+		return
+	end
+
+	if not TrackerEnabled then
+		return
+	end
+
+	local List = {}
+
+	for _,Player in ipairs(
+		Players:GetPlayers()
+	) do
+
+		if Player ~= LocalPlayer then
+
+			local Character =
+				Player.Character
+
+			if Character then
+
+				local Root =
+					Character:FindFirstChild(
+						"HumanoidRootPart"
+					)
+
+				local Humanoid =
+					Character:FindFirstChildOfClass(
+						"Humanoid"
+					)
+
+				if Root
+					and Humanoid
+					and Humanoid.Health > 0 then
+
+					local Distance =
+						(
+							Root.Position
+							- CameraPosition
+						).Magnitude
+
+					if Distance <=
+						TrackerDistance then
+
+						table.insert(
+							List,
+							{
+								Player = Player,
+								Distance = Distance
+							}
+						)
+					end
+				end
+			end
+		end
+	end
+
+	table.sort(
+		List,
+		function(A,B)
+			return A.Distance <
+				B.Distance
+		end
+	)
+
+	local Wanted = {}
+
+	for i = 1,
+		math.min(
+			TrackerCount,
+			#List
+		) do
+
+		local Player =
+			List[i].Player
+
+		Wanted[Player] = true
+
+		if not Trackers[Player] then
+			CreateTracker(Player)
+		end
+
+		UpdateTracker(Player)
+	end
+
+	for Player in pairs(Trackers) do
+
+		if not Wanted[Player] then
+			RemoveTracker(Player)
+		end
+	end
+end
+
+--==================================================
+-- ENABLE
+--==================================================
+
+local function EnableFreecam()
+
+	if FreecamEnabled then
+		return
+	end
+
+	Camera =
+		workspace.CurrentCamera
+
+	CameraPosition =
+		Camera.CFrame.Position
+
+	local Look =
+		Camera.CFrame.LookVector
+
+	Yaw =
+		math.deg(
+			math.atan2(
+				-Look.X,
+				-Look.Z
+			)
+		)
+
+	Pitch =
+		math.deg(
+			math.asin(
+				math.clamp(
+					Look.Y,
+					-1,
+					1
+				)
+			)
+		)
+
+	TargetYaw = Yaw
+	TargetPitch = Pitch
+
+	FreecamEnabled = true
+
+	Camera.CameraType =
+		Enum.CameraType.Scriptable
+
+	Movement.Visible = true
+	Vertical.Visible = true
+
+	FreecamButton.Text =
+		"FREECAM ON"
+end
+
+--==================================================
+-- DISABLE
+--==================================================
+
+local function DisableFreecam()
+
+	if not FreecamEnabled then
+		return
+	end
+
+	FreecamEnabled = false
+
+	for Name in pairs(Moving) do
+		Moving[Name] = false
+	end
+
+	Movement.Visible = false
+	Vertical.Visible = false
+
+	for Player in pairs(Trackers) do
+		RemoveTracker(Player)
+	end
+
+	Camera =
+		workspace.CurrentCamera
+
+	Camera.CameraType =
+		Enum.CameraType.Custom
+
+	local Character =
+		LocalPlayer.Character
+
+	local Humanoid =
+		Character
+		and Character:FindFirstChildOfClass(
+			"Humanoid"
+		)
+
+	if Humanoid then
+		Camera.CameraSubject =
+			Humanoid
+	end
+
+	FreecamButton.Text =
+		"FREECAM"
+end
+
+--==================================================
+-- TOGGLE
+--==================================================
+
+FreecamButton.Activated:Connect(function()
+
+	if FreecamEnabled then
+		DisableFreecam()
+	else
+		EnableFreecam()
+	end
+end)
+
+--==================================================
+-- CAMERA
+--==================================================
+
+RunService.RenderStepped:Connect(function(DeltaTime)
+
+	if not FreecamEnabled then
+		return
+	end
+
+	local Alpha =
+		1 -
+		math.exp(
+			-Smoothness *
+			DeltaTime
+		)
+
+	Yaw +=
+		(TargetYaw - Yaw)
+		* Alpha
+
+	Pitch +=
+		(TargetPitch - Pitch)
+		* Alpha
+
+	local X = 0
+	local Z = 0
+	local Y = 0
+
+	if Moving.Forward then
+		Z += 1
+	end
+
+	if Moving.Backward then
+		Z -= 1
+	end
+
+	if Moving.Left then
+		X -= 1
+	end
+
+	if Moving.Right then
+		X += 1
+	end
+
+	if Moving.Up then
+		Y += 1
+	end
+
+	if Moving.Down then
+		Y -= 1
+	end
+
+	local Rotation =
+		CFrame.Angles(
+			0,
+			math.rad(Yaw),
+			0
+		)
+
+	local MovementVector =
+		Rotation.RightVector * X
+		+
+		Rotation.LookVector * Z
+
+	if MovementVector.Magnitude > 0 then
+
+		CameraPosition +=
+			MovementVector.Unit
+			* CameraSpeed
+			* DeltaTime
+	end
+
+	if Y ~= 0 then
+
+		CameraPosition +=
+			Vector3.new(0,Y,0)
+			* CameraSpeed
+			* DeltaTime
+	end
+
+	Camera.CFrame =
+		CFrame.new(CameraPosition)
+		* CFrame.Angles(
+			0,
+			math.rad(Yaw),
+			0
+		)
+		* CFrame.Angles(
+			math.rad(Pitch),
+			0,
+			0
+		)
+
+	TrackerTimer += DeltaTime
+
+	if TrackerTimer >= TrackerInterval then
+
+		TrackerTimer = 0
+		UpdateTrackers()
+	end
+end)
+
+--==================================================
+-- MOBILE CAMERA
+--==================================================
+
+UIS.TouchStarted:Connect(function(Touch)
+
+	if not FreecamEnabled then
+		return
+	end
+
+	local Position =
+		Touch.Position
+
+	local Viewport =
+		Camera.ViewportSize
+
+	if Position.X <
+		Viewport.X * 0.45 then
+		return
+	end
+
+	if Position.Y < 80 then
+		return
+	end
+
+	if Position.X >
+		Viewport.X - 120
+		and
+		Position.Y >
+		Viewport.Y - 280 then
+		return
+	end
+
+	LookTouch = Touch
+	LastLookPosition = Position
+end)
+
+UIS.TouchMoved:Connect(function(Touch)
+
+	if not FreecamEnabled then
+		return
+	end
+
+	if Touch ~= LookTouch then
+		return
+	end
+
+	if not LastLookPosition then
+		return
+	end
+
+	local Delta =
+		Touch.Position
+		- LastLookPosition
+
+	TargetYaw -=
+		Delta.X * LookSpeed
+
+	TargetPitch -=
+		Delta.Y * LookSpeed
+
+	TargetPitch =
+		math.clamp(
+			TargetPitch,
+			-MaxPitch,
+			MaxPitch
+		)
+
+	LastLookPosition =
+		Touch.Position
+end)
+
+UIS.TouchEnded:Connect(function(Touch)
+
+	if Touch == LookTouch then
+
+		LookTouch = nil
+		LastLookPosition = nil
+	end
+end)
+
+--==================================================
+-- PLAYER REMOVING
+--==================================================
+
+Players.PlayerRemoving:Connect(function(Player)
+
+	RemoveTracker(Player)
+end)
+
+print(
+	"[FreecamSystem] Loaded successfully"
+)
